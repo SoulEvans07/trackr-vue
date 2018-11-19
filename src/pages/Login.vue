@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="login login-box">
-            <!--<img class="login login-title" src="./img/logo.png">-->
+            <img class="login login-title" src="../assets/imgs/logo.png">
             <div class="login login-field-box">
                 <input type="text" class="login login-field" placeholder="Username"
                        v-model="username"/>
@@ -10,10 +10,10 @@
                 <br>
                 <input type="button" @click="login" value="Login" class="login login-btn"/>
             </div>
-            <a class="login link" @click="forgot">Forgot password?</a>
+            <a class="login link" @click="redir_forgot">Forgot password?</a>
         </div>
         <div class="login login-box">
-            Don't have an account? <a class="login link" @click="register">Register</a>
+            Don't have an account? <a class="login link" @click="redir_register">Register</a>
         </div>
     </div>
 </template>
@@ -41,10 +41,10 @@
                     console.log(err.response.data);
                 });
             },
-            forgot: function () {
-
+            redir_forgot: function () {
+                router.push('/forgotten');
             },
-            register: function () {
+            redir_register: function () {
                 router.push('/register');
             }
         }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="register-box">
-            <!--<img class="title-img" src="/imgs/logo.png">-->
+            <img class="title-img" src="../assets/imgs/logo.png">
             <!--<div class="register-text">Sign up to see photos and videos from your friends.</div>-->
             <div>
                 <div class="register-field-box">
