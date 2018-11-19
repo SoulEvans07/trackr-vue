@@ -63,7 +63,7 @@
         background-color: white;
         margin: 30px auto auto;
         padding: 20px;
-        width: 25%;
+        width: 300px;
         border: solid 1px #bebebe;
         border-radius: 3px;
         text-align: center;
@@ -94,5 +94,6 @@
 
     .login.link {
         color: #2e6da4;
+        cursor: pointer;
     }
 </style>

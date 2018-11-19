@@ -21,7 +21,7 @@
             <br>
         </div>
         <div class="register-box">
-            Have an account? <a @click="redir_login">Log in</a>
+            Have an account? <a class="register-link" @click="redir_login" >Log in</a>
         </div>
     </div>
 </template>
@@ -68,7 +68,7 @@
         background-color: white;
         margin: 30px auto auto;
         padding: 20px;
-        width: 25%;
+        width: 300px;
         border: solid 1px #bebebe;
         border-radius: 3px;
         text-align: center;
@@ -103,5 +103,10 @@
         border: none;
         padding: 5px;
         border-radius: 2px;
+    }
+
+    .register-link {
+        color: #2e6da4;
+        cursor: pointer;
     }
 </style>
