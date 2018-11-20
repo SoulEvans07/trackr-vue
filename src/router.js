@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
             next();
         }
     } else {
-        if (isAuthenticated())
+        if (!to.path.startsWith('/dashboard') && isAuthenticated())
             next('/dashboard');
         else
             next();
