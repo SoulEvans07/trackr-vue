@@ -23,10 +23,12 @@
 
     export default {
         data() {
-            return { email: null }
+            return {
+                email: null
+            }
         },
         methods: {
-            send_login_link: function(){
+            send_login_link: function () {
                 console.log("send to: " + email);
             },
             redir_login: function () {

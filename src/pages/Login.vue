@@ -21,6 +21,7 @@
 <script>
     import axios from 'axios';
     import router from '../router'
+    import store from '../store'
 
     export default {
         props: [],
@@ -36,7 +37,10 @@
                     username: this.username,
                     password: this.password
                 }).then((res) => {
-                    console.log(res.data);
+                    store.token = res.data.token;
+                    store.user = res.data.user;
+
+                    router.push('/dashboard');
                 }).catch((err) => {
                     console.log(err.response.data);
                 });
