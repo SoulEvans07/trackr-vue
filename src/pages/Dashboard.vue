@@ -1,9 +1,11 @@
 <template>
     <div>
-        <h1>TODOS</h1>
-        <p>{{this.store.token}}</p>
-        <p>{{this.store.user}}</p>
+        <h1>Dashboard</h1>
+        <h3>user: {{store.get().user.username}}</h3>
         <input type="button" value="Logout" @click="logout"/>
+        <div style="background: whitesmoke">
+            <router-view/>
+        </div>
     </div>
 </template>
 
@@ -19,8 +21,7 @@
         },
         methods: {
             logout: function () {
-                store.token = undefined;
-                store.user = undefined;
+                store.logout();
                 router.push('/login');
             }
         }

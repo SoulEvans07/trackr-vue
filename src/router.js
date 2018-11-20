@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// import _ from 'lodash'
+import _ from 'lodash'
 
 import store from './store'
 
@@ -11,6 +11,7 @@ import register from './pages/Register'
 import forgotten from './pages/Forgotten'
 
 import dashboard from './pages/Dashboard'
+import todoList from './components/TodoList'
 
 Vue.use(VueRouter);
 
@@ -21,7 +22,14 @@ const router = new VueRouter({
         { path: '/register', component: register },
         { path: '/forgotten', component: forgotten },
 
-        { path: '/dashboard', component: dashboard },
+        {
+            path: '/dashboard',
+            component: dashboard,
+            redirect: '/dashboard/list',
+            children: [
+                { path: 'list', component: todoList }
+            ]
+        },
 
         { path: '*', component: notFound }
     ]
@@ -30,23 +38,28 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.path.startsWith('/dashboard')) {
         if (!isAuthenticated()) {
-            console.log('Redirect from ' + to.path + ' to /login');
             next('/login');
         } else {
             next();
         }
     } else {
-        if (!to.path.startsWith('/dashboard') && isAuthenticated())
+        if (!to.path.startsWith('/dashboard') && isAuthenticated()) {
             next('/dashboard');
-        else
+        } else {
             next();
+        }
     }
 });
 
 const isAuthenticated = () => {
-    let user = store.user;
-    let token = store.token;
-    return user && token;
+    let user = store.get();
+    if (_.isEmpty(user) || !user) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user)
+            store.login(user);
+    }
+
+    return !_.isEmpty(user) && user;
 };
 
 export default router;

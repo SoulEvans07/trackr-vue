@@ -1,7 +1,9 @@
 <template>
     <div>
         <div class="register-box">
-            <img class="title-img" src="../assets/imgs/logo.png">
+            <!--<img class="logo" src="../assets/imgs/logo.png">-->
+            <!--<img class="logo" src="../assets/imgs/logo.png">-->
+            <h1 class="logo">TrackR</h1>
             <!--<div class="register-text">Sign up to see photos and videos from your friends.</div>-->
             <div>
                 <div class="register-field-box">
@@ -50,10 +52,8 @@
                     username: this.username,
                     email: this.email,
                     password: this.password
-                }).then((res) => {
-                    console.log(res.data);
-                }).catch((err) => {
-                    console.log(err.response.data);
+                }).then(() => {
+                    router.push('/login');
                 });
             },
             redir_login: function () {
@@ -64,6 +64,15 @@
 </script>
 
 <style>
+    .logo {
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        font-size: 30px;
+        width: 80%;
+        margin: 10px auto 10px;
+    }
+
     .register-box {
         background-color: white;
         margin: 30px auto auto;

@@ -2,7 +2,7 @@
     <div>
         <div class="login login-box">
             <!--<img class="login login-title" src="../assets/imgs/logo.png">-->
-            <h1><b>TrackR</b></h1>
+            <h1 class="logo">TrackR</h1>
             <div class="login login-field-box">
                 <input type="text" class="login login-field" placeholder="Username"
                        v-model="username"
@@ -40,12 +40,11 @@
                     username: this.username,
                     password: this.password
                 }).then((res) => {
-                    store.token = res.data.token;
-                    store.user = res.data.user;
-
+                    store.login({
+                        user: res.data.user,
+                        token: res.data.token
+                    });
                     router.push('/dashboard');
-                }).catch((err) => {
-                    console.log(err.response.data);
                 });
             },
             redir_forgot: function () {
@@ -59,11 +58,13 @@
 </script>
 
 <style>
-    .login.login-title {
-        font-family: 'Condiment', cursive;
+    .logo {
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        text-align: center;
         font-size: 30px;
         width: 80%;
-        margin: 10px 0 10px 0;
+        margin: 10px auto 10px;
     }
 
     .login.login-box {
