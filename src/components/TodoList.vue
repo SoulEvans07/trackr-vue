@@ -1,13 +1,15 @@
 <template>
     <div>
         <h3>{{title}}</h3>
-        <input type="text" v-model="new_todo"><input type="button" value="ADD" v-on:click="addTodo">
         <ul>
             <TodoItem
                     v-for="todo in this.todo_list"
                     v-bind:todo="todo"
                     v-bind:key="todo.id"></TodoItem>
         </ul>
+        <input type="text" v-model="new_todo"
+               v-on:keyup.enter="addTodo">
+        <input type="button" value="ADD" v-on:click="addTodo">
     </div>
 </template>
 <script>
@@ -26,7 +28,7 @@
         mounted(){
             axios.get('http://127.0.0.1:3000/api/tasks/list')
                 .then(res => {
-                    res.data.list.forEach(task => this.todo_list.push(task));
+                    res.data.forEach(task => this.todo_list.push(task));
                 });
         },
         methods: {
@@ -35,7 +37,7 @@
                     await axios
                         .post('http://127.0.0.1:3000/api/tasks/new', {
                             name: this.new_todo,
-                            is_done: false
+                            state: 'OPEN'
                         });
                     this.refresh();
                     this.new_todo = undefined;
@@ -45,9 +47,14 @@
                 this.todo_list = [];
                 axios.get('http://127.0.0.1:3000/api/tasks/list')
                     .then(res => {
-                        res.data.list.forEach(task => this.todo_list.push(task));
+                        res.data.forEach(task => this.todo_list.push(task));
                     });
             }
         }
     }
 </script>
+
+
+<style>
+
+</style>
