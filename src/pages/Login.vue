@@ -1,12 +1,15 @@
 <template>
     <div>
         <div class="login login-box">
-            <img class="login login-title" src="../assets/imgs/logo.png">
+            <!--<img class="login login-title" src="../assets/imgs/logo.png">-->
+            <h1><b>TrackR</b></h1>
             <div class="login login-field-box">
                 <input type="text" class="login login-field" placeholder="Username"
-                       v-model="username"/>
+                       v-model="username"
+                       v-on:keyup.enter="login"/>
                 <input type="password" class="login login-field" placeholder="Password"
-                       v-model="password"/>
+                       v-model="password"
+                       v-on:keyup.enter="login"/>
                 <br>
                 <input type="button" @click="login" value="Login" class="login login-btn"/>
             </div>

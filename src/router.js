@@ -28,11 +28,18 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.path.startsWith('/dashboard') && !isAuthenticated()) {
-        console.log('Redirect from ' + to.path + ' to /login');
-        next('/login');
+    if (to.path.startsWith('/dashboard')) {
+        if (!isAuthenticated()) {
+            console.log('Redirect from ' + to.path + ' to /login');
+            next('/login');
+        } else {
+            next();
+        }
     } else {
-        next();
+        if (isAuthenticated())
+            next('/dashboard');
+        else
+            next();
     }
 });
 

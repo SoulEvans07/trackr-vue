@@ -29,7 +29,7 @@
         },
         methods: {
             send_login_link: function () {
-                console.log("send to: " + email);
+                console.log("send to: " + this.email);
             },
             redir_login: function () {
                 router.push('/login');
