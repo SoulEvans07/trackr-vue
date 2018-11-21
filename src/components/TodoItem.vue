@@ -1,7 +1,10 @@
 <template>
-    <li @click="markDone">
-        <span :class="this.class">{{this.todo.state}}</span>
-        <span>{{this.todo.name}}</span>
+    <li>
+        <span :class="this.class" @click="markDone">{{this.todo.state}}</span>
+        <input type="text"
+               v-model.lazy="todo.name"
+               v-on:keyup.enter="updateTodo"
+               v-on:blur="updateTodo"/>
     </li>
 </template>
 
@@ -21,7 +24,11 @@
             this.setStyle();
         },
         methods: {
-            markDone: function () {
+            updateTodo: async function () {
+                console.log("change " + this.todo.name);
+                apiService.post('/tasks/' + this.todo._id + '/update', this.todo);
+            },
+            markDone: async function () {
                 switch (this.todo.state) {
                     case STATE[ 0 ]:
                         this.todo.state = STATE[ 1 ];
@@ -34,9 +41,7 @@
                         break;
                 }
 
-                apiService.post('/tasks/' + this.todo._id + '/update', this.todo)
-                    .then(res => console.log(res))
-                    .catch(err => console.log(err));
+                apiService.post('/tasks/' + this.todo._id + '/update', this.todo);
                 this.setStyle();
             },
             setStyle: function () {
