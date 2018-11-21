@@ -12,9 +12,10 @@
         <input type="button" value="ADD" v-on:click="addTodo">
     </div>
 </template>
+
 <script>
-    import axios from 'axios';
-    import TodoItem from "./TodoItem";
+    import apiService from '../services/apiService';
+    import TodoItem from './TodoItem';
 
     export default {
         components: { TodoItem },
@@ -25,8 +26,8 @@
                 todo_list: []
             }
         },
-        mounted(){
-            axios.get('http://127.0.0.1:3000/api/tasks/list')
+        async mounted() {
+            await apiService.get('/tasks/list')
                 .then(res => {
                     res.data.forEach(task => this.todo_list.push(task));
                 });
@@ -34,18 +35,17 @@
         methods: {
             addTodo: async function () {
                 if (this.new_todo) {
-                    await axios
-                        .post('http://127.0.0.1:3000/api/tasks/new', {
-                            name: this.new_todo,
-                            state: 'OPEN'
-                        });
+                    await apiService.post('http://127.0.0.1:3000/api/tasks/new', {
+                        name: this.new_todo,
+                        state: 'OPEN'
+                    });
                     this.refresh();
                     this.new_todo = undefined;
                 }
             },
-            refresh: function () {
+            refresh: async function () {
                 this.todo_list = [];
-                axios.get('http://127.0.0.1:3000/api/tasks/list')
+                await apiService.get('/tasks/list')
                     .then(res => {
                         res.data.forEach(task => this.todo_list.push(task));
                     });

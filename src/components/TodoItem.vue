@@ -6,9 +6,9 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import apiService from '../services/apiService';
 
-    const STATE = [ "OPEN", "IN_PROGRESS", "DONE"];
+    const STATE = [ "OPEN", "IN_PROGRESS", "DONE" ];
 
     export default {
         props: [ 'todo' ],
@@ -23,12 +23,18 @@
         methods: {
             markDone: function () {
                 switch (this.todo.state) {
-                    case STATE[0]: this.todo.state = STATE[1]; break;
-                    case STATE[1]: this.todo.state = STATE[2]; break;
-                    case STATE[2]: this.todo.state = STATE[0]; break;
+                    case STATE[ 0 ]:
+                        this.todo.state = STATE[ 1 ];
+                        break;
+                    case STATE[ 1 ]:
+                        this.todo.state = STATE[ 2 ];
+                        break;
+                    case STATE[ 2 ]:
+                        this.todo.state = STATE[ 0 ];
+                        break;
                 }
 
-                axios.post('http://127.0.0.1:3000/api/tasks/' + this.todo._id + '/update', this.todo)
+                apiService.post('/tasks/' + this.todo._id + '/update', this.todo)
                     .then(res => console.log(res))
                     .catch(err => console.log(err));
                 this.setStyle();
@@ -49,7 +55,7 @@
         cursor: pointer;
     }
 
-    .open{
+    .open {
         background: darkblue;
     }
 
