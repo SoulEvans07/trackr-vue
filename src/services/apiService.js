@@ -12,7 +12,7 @@ class ApiService {
         if (user) {
             try {
                 user = JSON.parse(user);
-                this._axios.defaults.headers.common[ 'Authorization' ] = user.token;
+                this._axios.defaults.headers.common['Authorization'] = user.token;
             } catch (e) {
                 console.error('Can not parse localstorage', e);
             }

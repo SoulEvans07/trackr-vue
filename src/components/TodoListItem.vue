@@ -30,14 +30,14 @@
             },
             markDone: async function () {
                 switch (this.todo.state) {
-                    case STATE[ 0 ]:
-                        this.todo.state = STATE[ 1 ];
+                    case STATE[0]:
+                        this.todo.state = STATE[1];
                         break;
-                    case STATE[ 1 ]:
-                        this.todo.state = STATE[ 2 ];
+                    case STATE[1]:
+                        this.todo.state = STATE[2];
                         break;
-                    case STATE[ 2 ]:
-                        this.todo.state = STATE[ 0 ];
+                    case STATE[2]:
+                        this.todo.state = STATE[0];
                         break;
                 }
 

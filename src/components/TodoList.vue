@@ -2,10 +2,10 @@
     <div>
         <h3>{{title}}</h3>
         <ul>
-            <TodoItem
+            <TodoListItem
                     v-for="todo in this.todo_list"
                     v-bind:todo="todo"
-                    v-bind:key="todo.id"></TodoItem>
+                    v-bind:key="todo.id"></TodoListItem>
         </ul>
         <input type="text" v-model="new_todo"
                v-on:keyup.enter="addTodo">
@@ -15,10 +15,10 @@
 
 <script>
     import apiService from '../services/apiService';
-    import TodoItem from './TodoItem';
+    import TodoListItem from './TodoListItem';
 
     export default {
-        components: { TodoItem },
+        components: { TodoListItem: TodoListItem },
         data() {
             return {
                 title: "Todo List",

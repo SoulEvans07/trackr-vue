@@ -23,7 +23,7 @@
             <br>
         </div>
         <div class="register-box">
-            Have an account? <a class="register-link" @click="redir_login" >Log in</a>
+            Have an account? <a class="register-link" @click="redir_login">Log in</a>
         </div>
     </div>
 </template>
