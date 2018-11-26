@@ -12,6 +12,7 @@ import forgotten from './pages/Forgotten'
 
 import dashboard from './pages/Dashboard'
 import todoList from './components/TodoList'
+import home from './components/Home'
 
 Vue.use(VueRouter);
 
@@ -25,9 +26,10 @@ const router = new VueRouter({
         {
             path: '/dashboard',
             component: dashboard,
-            redirect: '/dashboard/list',
+            redirect: '/dashboard/tasks',
             children: [
-                { path: 'list', component: todoList }
+                { path: 'home', component: home },
+                { path: 'tasks', component: todoList }
             ]
         },
 
