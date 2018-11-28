@@ -4,6 +4,15 @@
             <div class="add-task-btn" @click="newTask">Add Task</div>
         </div>
         <div class="todo-box">
+            <ul class="todo-list"
+                v-if="this.loading">
+                <li class="todo-list-item loading"
+                    v-for="i in 5"
+                    v-bind:key="i">
+                    <div class="placeholder_dot"></div>
+                    <div class="placeholder_text"></div>
+                </li>
+            </ul>
             <ul class="todo-list">
                 <TodoListItem
                         v-bind:class="getClass(todo)"
@@ -35,11 +44,16 @@
                 title: "Todo List",
                 new_task: undefined,
                 selected_task: undefined,
-                todo_list: []
+                todo_list: [],
+                loading: true
             }
         },
         async mounted() {
-            this.refresh();
+            await this.refresh();
+            this.loading = false;
+        },
+        created() {
+            this.loading = true;
         },
         methods: {
             getClass: function (todo) {
@@ -123,8 +137,25 @@
     }
 </script>
 
-
 <style>
+    .placeholder_dot {
+        width: 15px;
+        margin: 4px 0 4px 10px;
+        border-radius: 10px;
+        background: #eaeaea;
+
+        height: 15px;
+    }
+
+    .placeholder_text {
+        width: 70%;
+        margin: 6px 10px;
+        border-radius: 10px;
+        background: #eaeaea;
+
+        height: 10px;
+    }
+
     .todo-header {
         background: #fff;
         border-radius: 3px 3px 0 0;
@@ -208,14 +239,14 @@
         /*align-items: center;*/
     }
 
-    .todo-list-item:hover {
+    .todo-list-item:not(.loading):hover {
         background: #f6f8f9;
         cursor: pointer;
         border-top: solid 1px #e0e6e8;
         height: 26px;
     }
 
-    .todo-list-item.selected {
+    .todo-list-item:not(.loading).selected {
         border-color: #14aaf5;
         -moz-box-shadow: inset 0 2px 5px -1px #e0e6e8;
         -webkit-box-shadow: inset 0 2px 5px -1px #e0e6e8;
