@@ -1,9 +1,8 @@
 <template>
     <li v-bind:id="todo.index" @click="select">
-        <!--<span :class="this.class" @click="markDone">{{this.todo.is_done? '+' : '-' }}</span>-->
-        <input class="todo-checkbox" type="checkbox" @click="markDone"
-               v-model="this.todo.is_done">
         <span style="margin: 0px 5px">{{todo.index}}</span>
+        <input class="todo-checkbox" style="margin: 0px 5px" type="checkbox" @click="markDone"
+               v-model="this.todo.is_done">
         <input class="todo-name" type="text"
                v-bind:id="name_id"
                v-model="todo.name"
@@ -33,7 +32,6 @@
             },
 
             updateTodo: async function () {
-                console.log("update: " + this.todo.index);
                 apiService.post('/tasks/' + this.todo._id + '/update', this.todo);
             },
             markDone: async function () {

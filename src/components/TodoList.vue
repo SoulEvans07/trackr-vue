@@ -3,7 +3,7 @@
         <p>{{title}}</p>
         <ul class="todo-list">
             <TodoListItem
-                    class="todo-list-item"
+                    :class="getClass(todo)"
                     v-for="todo in this.todo_list"
                     v-bind:todo="todo"
                     v-bind:key="todo._id"
@@ -38,6 +38,12 @@
             this.refresh();
         },
         methods: {
+            getClass: function(todo){
+                let todo_class = "todo-list-item";
+                if(this.selected_task === todo)
+                    todo_class += " selected";
+                return todo_class;
+            },
             moveFrom: async function (from, dir) {
                 let to = from + dir;
                 to = to < 0 ? 0 : to;
@@ -51,8 +57,9 @@
             },
             onSelect: function (todo) {
                 this.selected_task = todo;
+
                 // without the empty timeout, the focusTask runs before the element is rendered
-                setTimeout(() => focusTask(todo.index), 100);
+                setTimeout(() => focusTask(todo.index), 50);
             },
             clearSelect: function () {
                 blurTask(this.selected_task.index);
