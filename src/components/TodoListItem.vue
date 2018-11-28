@@ -1,7 +1,7 @@
 <template>
     <li v-bind:id="todo.index" @click="select">
-        <span style="margin: 0px 5px">{{todo.index}}</span>
-        <input class="todo-checkbox" style="margin: 0px 5px" type="checkbox" @click="markDone"
+        <span style="margin: 0 5px; width: 20px;">{{todo.index}}</span>
+        <input class="todo-checkbox" style="margin: 0 5px" type="checkbox" @click="markDone"
                v-model="this.todo.is_done">
         <input class="todo-name" type="text"
                v-bind:id="name_id"

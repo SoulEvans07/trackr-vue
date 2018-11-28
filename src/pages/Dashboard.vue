@@ -136,7 +136,7 @@
     .content-header {
         background: #fff;
         padding: 10px;
-        height: 15%;
+        height: 70px;
 
         position: relative;
         z-index: 200;
@@ -151,9 +151,9 @@
         z-index: 100;
 
         width: auto;
-        height: 85%;
+        height: calc(100%-70px);
         background: #f6f8f9;
-        padding: 10px;
+        padding: 15px;
 
         display: flex;
         flex-direction: column;
