@@ -1,44 +1,54 @@
 <template>
-    <div>
-        <div class="todo-header">
-            <div class="add-task-btn" @click="newTask">Add Task</div>
+    <div style="flex-direction: row">
+        <div class="todo-list-root">
+            <div class="todo-header">
+                <div class="add-task-btn" @click="newTask">Add Task</div>
+            </div>
+            <div class="todo-box">
+                <ul class="todo-list"
+                    v-if="this.loading">
+                    <li class="todo-list-item loading"
+                        v-for="i in 5"
+                        v-bind:key="i">
+                        <div class="placeholder_dot"></div>
+                        <div class="placeholder_text"></div>
+                    </li>
+                </ul>
+                <ul class="todo-list">
+                    <TodoListItem
+                            v-bind:class="getClass(todo)"
+                            v-for="todo in this.todo_list"
+                            v-bind:todo="todo"
+                            v-bind:key="todo._id"
+                            @new="newTask"
+                            @down="moveFrom(todo.index, 1)"
+                            @up="moveFrom(todo.index, -1)"
+                            @del="deleteTodo(todo)"
+                            @deselect="clearSelect()"
+                            @click="onSelect(todo)"></TodoListItem>
+                    <!--<input type="text" v-model="new_task"-->
+                    <!--@keyup.enter="addTodo">-->
+                    <!--<input type="button" value="ADD" @click="addTodo">-->
+                </ul>
+            </div>
         </div>
-        <div class="todo-box">
-            <ul class="todo-list"
-                v-if="this.loading">
-                <li class="todo-list-item loading"
-                    v-for="i in 5"
-                    v-bind:key="i">
-                    <div class="placeholder_dot"></div>
-                    <div class="placeholder_text"></div>
-                </li>
-            </ul>
-            <ul class="todo-list">
-                <TodoListItem
-                        v-bind:class="getClass(todo)"
-                        v-for="todo in this.todo_list"
-                        v-bind:todo="todo"
-                        v-bind:key="todo._id"
-                        @new="newTask"
-                        @down="moveFrom(todo.index, 1)"
-                        @up="moveFrom(todo.index, -1)"
-                        @del="deleteTodo(todo)"
-                        @deselect="clearSelect()"
-                        @click="onSelect(todo)"></TodoListItem>
-                <!--<input type="text" v-model="new_task"-->
-                <!--@keyup.enter="addTodo">-->
-                <!--<input type="button" value="ADD" @click="addTodo">-->
-            </ul>
-        </div>
+        <TodoDetails
+                v-if="this.selected_task"
+                v-bind:todo="this.selected_task"
+                v-bind:key="this.selected_task._id"></TodoDetails>
     </div>
 </template>
 
 <script>
     import apiService from '../services/apiService';
     import TodoListItem from './TodoListItem';
+    import TodoDetails from './TodoDetails';
 
     export default {
-        components: { TodoListItem: TodoListItem },
+        components: {
+            TodoListItem: TodoListItem,
+            TodoDetails: TodoDetails
+        },
         data() {
             return {
                 title: "Todo List",
@@ -138,22 +148,10 @@
 </script>
 
 <style>
-    .placeholder_dot {
-        width: 15px;
-        margin: 4px 0 4px 10px;
-        border-radius: 10px;
-        background: #eaeaea;
-
-        height: 15px;
-    }
-
-    .placeholder_text {
-        width: 70%;
-        margin: 6px 10px;
-        border-radius: 10px;
-        background: #eaeaea;
-
-        height: 10px;
+    .todo-list-root {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
     }
 
     .todo-header {
@@ -164,10 +162,9 @@
         position: relative;
         z-index: 100;
 
+        height: 40px;
         padding: 5px 5px 5px 30px;
 
-        -webkit-box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.15);
-        -moz-box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.15);
         box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.15);
     }
 
@@ -191,6 +188,12 @@
         border-color: #008ce3;
     }
 
+    .add-task-btn:active{
+        background-color: #006db0;
+        border-color: #006db0;
+        box-shadow: none;
+    }
+
     .todo-box {
         background: #f6f8f9;
         width: 100%;
@@ -204,8 +207,6 @@
         overflow-x: hidden;
         /*border: solid 1px #dfe5e7;*/
 
-        -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
-        -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
     }
 
@@ -218,7 +219,7 @@
         min-height: 100%;
 
         margin-bottom: -1px;
-        padding: 2px 0 1px;
+        padding: 0 0 1px;
         position: relative;
         display: block;
     }
@@ -261,6 +262,24 @@
         position: absolute;
         pointer-events: none;
         right: 0;
+    }
+
+    .placeholder_dot {
+        width: 15px;
+        margin: 4px 0 4px 10px;
+        border-radius: 10px;
+        background: #eaeaea;
+
+        height: 15px;
+    }
+
+    .placeholder_text {
+        width: 40%;
+        margin: 6px 10px;
+        border-radius: 10px;
+        background: #eaeaea;
+
+        height: 10px;
     }
 
 </style>
