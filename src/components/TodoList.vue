@@ -131,7 +131,7 @@
         position: relative;
         z-index: 100;
 
-        padding: 4px 4px 4px 27px;
+        padding: 5px 5px 5px 30px;
 
         -webkit-box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.15);
@@ -185,9 +185,7 @@
         min-height: 100%;
 
         margin-bottom: -1px;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 1px;
+        padding: 2px 0 1px;
         position: relative;
         display: block;
     }
@@ -206,6 +204,13 @@
         bottom: 0;
         /*-webkit-align-items: center;*/
         /*align-items: center;*/
+    }
+
+    .todo-list-item:hover {
+        background: #f6f8f9;
+        cursor: pointer;
+        border-top: solid 1px #e0e6e8;
+        height: 26px;
     }
 
     .todo-list-item.selected {
