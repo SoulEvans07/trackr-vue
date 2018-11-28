@@ -151,9 +151,9 @@
         z-index: 100;
 
         width: auto;
-        height: calc(100%-70px);
+        height: calc(100% - 70px);
         background: #f6f8f9;
-        padding: 15px;
+        padding: 15px 15px 0;
 
         display: flex;
         flex-direction: column;

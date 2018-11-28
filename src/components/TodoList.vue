@@ -165,6 +165,8 @@
         position: relative;
         z-index: 50;
 
+        height: 100%;
+
         overflow-y: auto;
         overflow-x: hidden;
         /*border: solid 1px #dfe5e7;*/
@@ -179,6 +181,8 @@
         background: #fff;
         width: 100%;
         /*max-width: calc(100% - 50px);*/
+
+        min-height: 100%;
 
         margin-bottom: -1px;
         padding-left: 10px;
