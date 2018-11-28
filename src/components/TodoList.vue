@@ -1,7 +1,6 @@
 <template>
     <div>
         <h3>{{title}}</h3>
-        <p>{{selected_task}}</p>
         <ul>
             <TodoListItem
                     v-for="todo in this.todo_list"
@@ -39,33 +38,22 @@
         },
         methods: {
             moveFrom: async function (from, dir) {
-                console.log("from: " + from);
                 let to = from + dir;
-                console.log("to: " + to);
                 to = to < 0 ? 0 : to;
-                console.log("new to: " + to);
-                console.log("len: " + this.todo_list.length);
-                to = (to >= this.todo_list.length) ? this.todo_list.length - 1 : to;
-                console.log("moveFrom select " + to);
+                to = (to > this.todo_list.length) ? this.todo_list.length - 1 : to;
                 this.onSelect(this.todo_list[to]);
             },
             moveTo(index) {
                 index = index < 0 ? 0 : index;
                 index = index >= this.todo_list.length ? this.todo_list.length - 1 : index;
-                console.log("moveTo select " + index);
                 this.onSelect(this.todo_list[index]);
             },
             onSelect: function (todo) {
-                console.log("select: " + todo.index);
                 this.selected_task = todo;
-                console.log("selected: " + this.selected_task.index);
                 // without the empty timeout, the focusTask runs before the element is rendered
                 setTimeout(() => focusTask(todo.index), 100);
             },
             clearSelect: function () {
-                console.log("deselect!");
-                if (!this.selected_task)
-                    console.log("deselect fail!");
                 blurTask(this.selected_task.index);
                 this.selected_task = null;
             },
@@ -73,7 +61,6 @@
                 let index = this.todo_list.indexOf(todo);
 
                 this.todo_list.splice(index, 1);
-                console.log("delete: " + todo.index);
                 await apiService.delete("http://127.0.0.1:3000/api/tasks/" + todo._id + "/delete");
 
                 if (this.todo_list.length > 0)
@@ -95,21 +82,15 @@
                 }
             },
             newTask: async function () {
-                if (!this.selected_task)
-                    console.log("newTask fail!");
                 let index = this.selected_task.index + 1;
-                console.log("new Task.index:" + index);
                 await apiService.post('http://127.0.0.1:3000/api/tasks/new', {
                     name: '',
                     index: index
-                }).then(() => {
-                    this.moveFrom(this.selected_task.index, 1);
-                    this.refresh();
                 });
+                await this.refresh();
+                this.moveFrom(this.selected_task.index, 1);
             },
             refresh: async function () {
-                if (this.selected_task)
-                    console.log("refresh! selected: " + this.selected_task.index);
                 this.todo_list = [];
                 await apiService.get('/tasks/list')
                     .then(res => {
@@ -125,7 +106,6 @@
     export function focusTask(id) {
         const todo = document.getElementById('title-' + id);
         if (todo !== null) {
-            console.log("focus: " + todo.parentElement.id);
             todo.focus();
         }
     }
@@ -133,7 +113,6 @@
     export function blurTask(id) {
         const todo = document.getElementById('title-' + id);
         if (todo !== null) {
-            console.log("blur: " + todo.parentElement.id);
             todo.blur();
         }
     }
