@@ -6,7 +6,7 @@
         <div class="todo-box">
             <ul class="todo-list">
                 <TodoListItem
-                        :class="getClass(todo)"
+                        v-bind:class="getClass(todo)"
                         v-for="todo in this.todo_list"
                         v-bind:todo="todo"
                         v-bind:key="todo._id"
@@ -44,8 +44,9 @@
         methods: {
             getClass: function (todo) {
                 let todo_class = "todo-list-item";
-                if (this.selected_task === todo)
+                if (this.selected_task && this.selected_task.index === todo.index) {
                     todo_class += " selected";
+                }
                 return todo_class;
             },
             moveFrom: async function (from, dir) {
@@ -75,16 +76,17 @@
                 this.todo_list.splice(index, 1);
                 await apiService.delete("http://127.0.0.1:3000/api/tasks/" + todo._id + "/delete");
 
-                if (this.todo_list.length > 0)
+                if (this.todo_list.length > 0) {
                     this.moveTo(index - 1);
-                else
+                } else {
                     this.clearSelect();
+                }
 
                 this.refresh();
             },
             newTask: async function () {
                 let index = this.todo_list.length;
-                if(this.selected_task)
+                if (this.selected_task)
                     index = this.selected_task.index + 1;
                 await apiService.post('http://127.0.0.1:3000/api/tasks/new', {
                     name: '',
@@ -138,7 +140,7 @@
         box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.15);
     }
 
-    .add-task-btn{
+    .add-task-btn {
         float: left;
         background: #14aaf5;
         border-color: #14aaf5;

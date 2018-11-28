@@ -45,7 +45,6 @@
                     this.$emit("new");
                 }
                 if (event.key === 'Backspace') {
-                    console.log(this.todo.name);
                     if(this.todo.name === null || this.todo.name === '')
                         this.$emit("del");
                 }
