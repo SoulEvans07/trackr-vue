@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <h3>{{title}}</h3>
-        <ul>
+    <div >
+        <p>{{title}}</p>
+        <ul class="todo-list">
             <TodoListItem
+                    class="todo-list-item"
                     v-for="todo in this.todo_list"
                     v-bind:todo="todo"
                     v-bind:key="todo._id"
@@ -12,10 +13,10 @@
                     @del="deleteTodo(todo)"
                     @deselect="clearSelect()"
                     @click="onSelect(todo)"></TodoListItem>
+            <!--<input type="text" v-model="new_task"-->
+            <!--@keyup.enter="addTodo">-->
+            <!--<input type="button" value="ADD" @click="addTodo">-->
         </ul>
-        <input type="text" v-model="new_task"
-               @keyup.enter="addTodo">
-        <input type="button" value="ADD" @click="addTodo">
     </div>
 </template>
 
@@ -120,5 +121,56 @@
 
 
 <style>
+    .todo-list {
+        background: #fff;
+        width: 100%;
+        /*max-width: calc(100% - 50px);*/
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        margin-bottom: -1px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 1px;
+        position: relative;
+        display: block;
+
+        -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+        -moz-box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+    }
+
+    .todo-list-item {
+        max-width: calc(100%);
+        display: flex;
+        flex: 0;
+        resize: none;
+        position: relative;
+
+        list-style-type: none;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        height: 26px;
+        bottom: 0;
+        /*-webkit-align-items: center;*/
+        /*align-items: center;*/
+    }
+
+    .todo-list-item.selected {
+        border-color: #14aaf5;
+        -moz-box-shadow: inset 0 2px 5px -1px #e0e6e8;
+        -webkit-box-shadow: inset 0 2px 5px -1px #e0e6e8;
+        box-shadow: inset 0 2px 5px -1px #e0e6e8;
+    }
+
+    .todo-list-item:not(.selected):not(.last-item)::after {
+        border-bottom: 1px solid #e0e6e8;
+        bottom: -2px;
+        content: "";
+        left: 0;
+        position: absolute;
+        pointer-events: none;
+        right: 0;
+    }
 
 </style>

@@ -26,12 +26,12 @@
             </div>
         </div>
         <div class="content">
-            <h1>Dashboard</h1>
-            <h3>user: {{store.get().user.username}}</h3>
-            <input type="button" value="Logout" @click="logout"/>
-            <div style="background: whitesmoke">
-                <router-view/>
+            <div class="content-header">
+                <!--<p>Dashboard</p>-->
+                <!--<p>user: {{store.get().user.username}}</p>-->
+                <!--<input type="button" value="Logout" @click="logout"/>-->
             </div>
+            <router-view class="router"/>
         </div>
     </div>
 </template>
@@ -129,7 +129,34 @@
     }
 
     .content {
-        height: 100%;
+        height: auto;
         flex: 1 1 auto;
     }
+
+    .content-header {
+        background: #fff;
+        padding: 10px;
+        height: 15%;
+
+        position: relative;
+        z-index: 200;
+
+        -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+        -moz-box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+    }
+
+    .router {
+        position: relative;
+        z-index: 100;
+
+        width: auto;
+        height: 85%;
+        background: #f6f8f9;
+        padding: 10px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
 </style>

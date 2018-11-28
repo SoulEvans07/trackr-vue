@@ -1,8 +1,10 @@
 <template>
     <li v-bind:id="todo.index" @click="select">
-        <span :class="this.class" @click="markDone">{{this.todo.is_done? '+' : '-' }}</span>
-        <span>{{todo.index}}</span>
-        <input type="text"
+        <!--<span :class="this.class" @click="markDone">{{this.todo.is_done? '+' : '-' }}</span>-->
+        <input class="todo-checkbox" type="checkbox" @click="markDone"
+               v-model="this.todo.is_done">
+        <span style="margin: 0px 5px">{{todo.index}}</span>
+        <input class="todo-name" type="text"
                v-bind:id="name_id"
                v-model="todo.name"
                v-on:blur="updateTodo"
@@ -67,6 +69,24 @@
 </script>
 
 <style>
+    .todo-checkbox {
+        position: relative;
+        top: 4px;
+    }
+
+    .todo-name {
+        border: 0;
+        font-size: 13px;
+        background: transparent;
+        /*position: absolute;*/
+        /*top: 4px;*/
+    }
+
+    .todo-name:focus{
+        outline: none;
+    }
+
+
     .state {
         font-weight: bold;
         color: white;

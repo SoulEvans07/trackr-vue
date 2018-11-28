@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" onload="search()">
         <router-view></router-view>
     </div>
 </template>
@@ -14,7 +14,7 @@
 
     Array.prototype.asyncForEach = async function (callback) {
         for (let index = 0; index < this.length; index++) {
-            await callback(this[ index ])
+            await callback(this[index])
         }
     };
 </script>
