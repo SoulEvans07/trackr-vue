@@ -22,6 +22,17 @@
                 </div>
                 <div class="due_date">{{todo.due_date ? todo.due_date : 'Due Date'}}</div>
             </div>
+
+            <div class="todo-description-row">
+                <svg class="descriptionIcon" focusable="false" viewBox="0 0 32 32">
+                    <path d="M31,8H1C0.4,8,0,7.6,0,7s0.4-1,1-1h30c0.6,0,1,0.4,1,1S31.6,8,31,8z"></path>
+                    <path d="M23,14H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,14,23,14z"></path>
+                    <path d="M27,20H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h26c0.6,0,1,0.4,1,1S27.6,20,27,20z"></path>
+                    <path d="M19,26H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h18c0.6,0,1,0.4,1,1S19.6,26,19,26z"></path>
+                </svg>
+                <textarea class="todo-description"
+                          v-model="todo.description"></textarea>
+            </div>
         </div>
     </div>
 </template>
@@ -33,10 +44,46 @@
 </script>
 
 <style>
+    .todo-description-row {
+        padding: 10px 0;
+        display: flex;
+    }
+
+    .todo-description {
+        flex: 1;
+        outline: 0;
+        border: 0;
+        padding: 5px;
+
+        resize: vertical;
+    }
+
+    .todo-description:hover {
+        border-radius: 3px;
+        border: solid 1px #b7bfc6;
+        padding: 4px;
+    }
+
+    .todo-description:active, .todo-description:focus {
+        border-radius: 3px;
+        border: solid 1px #646f79;
+        padding: 4px;
+        box-shadow: inset 0 1px 5px -1px rgba(0,0,0,0.25)
+    }
+
+    .descriptionIcon {
+        fill: #b7bfc6;
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+    }
+
     .assignee-due-date-row {
         flex: 1;
         flex-direction: row;
         padding: 10px 0;
+
+        border-bottom: solid 1px #dfe5e7;
     }
 
     .assignee {
@@ -52,7 +99,7 @@
     }
 
     .assignee:hover {
-        border: solid 1px #b7bfc6;
+        border: solid 1px #646f79;
         padding: 2px 15px 2px 2px;
     }
 
