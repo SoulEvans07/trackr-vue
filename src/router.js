@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
 });
 
 const isAuthenticated = () => {
-    let user = store.get();
+    let user = store.state.user;
     if (_.isEmpty(user) || !user) {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user)

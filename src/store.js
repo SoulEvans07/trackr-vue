@@ -1,18 +1,21 @@
 let store = {
-    user: {},
+    state: {
+        user: {},
+        tasks: [],
+        projects: []
+    },
 
     // Methods
     logout: function () {
         localStorage.removeItem('user');
-        this.user = {};
+        this.state.user = {};
     },
     login: function (user) {
-        this.user = user;
+        this.state.user = user;
         localStorage.setItem('user', JSON.stringify(user));
-    },
-    get: function () {
-        return this.user;
     }
+
+
 };
 
 export default store

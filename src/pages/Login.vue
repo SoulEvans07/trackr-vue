@@ -40,6 +40,7 @@
                     username: this.username,
                     password: this.password
                 }).then((res) => {
+                    console.log(res);
                     store.login({
                         user: res.data.user,
                         token: res.data.token

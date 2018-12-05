@@ -47,6 +47,8 @@
     .todo-description-row {
         padding: 10px 0;
         display: flex;
+
+        border-bottom: solid 1px #dfe5e7;
     }
 
     .todo-description {
@@ -56,6 +58,7 @@
         padding: 5px;
 
         resize: vertical;
+        min-height: 2.2em;
     }
 
     .todo-description:hover {
@@ -130,10 +133,15 @@
     .due_date {
         display: inline-flex;
         border-radius: 30px;
-        border: solid 1px #b7bfc6;
+        border: none;
         min-width: 100px;
         padding: 5px 15px;
         line-height: 30px;
+    }
+
+    .due_date:hover {
+        border: solid 1px #646f79;
+        padding: 4px 14px;
     }
 
     .mark-btn {

@@ -17,7 +17,7 @@
                 <ul class="todo-list">
                     <TodoListItem
                             v-bind:class="getClass(todo)"
-                            v-for="todo in this.todo_list"
+                            v-for="todo in this.task_list"
                             v-bind:todo="todo"
                             v-bind:key="todo._id"
                             @new="newTask"
@@ -40,11 +40,14 @@
 </template>
 
 <script>
+    import store from '../store';
     import apiService from '../services/apiService';
+    import taskListMixin from '../mixins/taskListMixin';
     import TodoListItem from './TodoListItem';
     import TodoDetails from './TodoDetails';
 
     export default {
+        mixins: [ taskListMixin ],
         components: {
             TodoListItem: TodoListItem,
             TodoDetails: TodoDetails
@@ -54,12 +57,12 @@
                 title: "Todo List",
                 new_task: undefined,
                 selected_task: undefined,
-                todo_list: [],
+                task_list: store.state.tasks,
                 loading: true
             }
         },
         async mounted() {
-            await this.refresh();
+            await this.refreshList();
             this.loading = false;
         },
         created() {
@@ -76,13 +79,13 @@
             moveFrom: async function (from, dir) {
                 let to = from + dir;
                 to = to < 0 ? 0 : to;
-                to = (to > this.todo_list.length) ? this.todo_list.length - 1 : to;
-                this.onSelect(this.todo_list[to]);
+                to = (to > this.task_list.length) ? this.task_list.length - 1 : to;
+                this.onSelect(this.task_list[to]);
             },
             moveTo(index) {
                 index = index < 0 ? 0 : index;
-                index = index >= this.todo_list.length ? this.todo_list.length - 1 : index;
-                this.onSelect(this.todo_list[index]);
+                index = index >= this.task_list.length ? this.task_list.length - 1 : index;
+                this.onSelect(this.task_list[index]);
             },
             onSelect: function (todo) {
                 this.selected_task = todo;
@@ -95,39 +98,29 @@
                 this.selected_task = null;
             },
             deleteTodo: async function (todo) {
-                let index = this.todo_list.indexOf(todo);
+                let index = this.task_list.indexOf(todo);
 
-                this.todo_list.splice(index, 1);
+                this.task_list.splice(index, 1);
                 await apiService.delete("http://127.0.0.1:3000/api/tasks/" + todo._id + "/delete");
 
-                if (this.todo_list.length > 0) {
+                if (this.task_list.length > 0) {
                     this.moveTo(index - 1);
                 } else {
                     this.clearSelect();
                 }
 
-                this.refresh();
+                await this.refreshList();
             },
             newTask: async function () {
-                let index = this.todo_list.length;
+                let index = this.task_list.length;
                 if (this.selected_task)
                     index = this.selected_task.index + 1;
                 await apiService.post('http://127.0.0.1:3000/api/tasks/new', {
                     name: '',
                     index: index
                 });
-                await this.refresh();
+                await this.refreshList();
                 this.moveFrom(this.selected_task.index, 1);
-            },
-            refresh: async function () {
-                this.todo_list = [];
-                await apiService.get('/tasks/list')
-                    .then(res => {
-                        res.data.forEach(task => this.todo_list.push(task));
-                    });
-                this.todo_list.sort((a, b) => {
-                    return a.index - b.index;
-                });
             }
         }
     }
