@@ -27,7 +27,10 @@ export default {
 
         },
         updateTask: async function (task) {
-            let index = this.task_list.indexOf(task);
+            let index = task.index;
+            // console.log("indx: " + index);
+            // console.log("task: " + task.index);
+            // console.log("byId: " + this.getById(task._id));
             await apiService.post('/tasks/' + task._id + '/update', task).then(res => {
                 this.$store.dispatch('setTask', { index: index, data: res.data });
             });
@@ -42,11 +45,16 @@ export default {
         },
 
         getById: function (id) {
+            console.log("match: " + id);
+            let index = -1;
             this.task_list.forEach(task => {
+                console.log(task._id);
                 if (task._id === id) {
-                    return task;
+                    console.log("found: " + JSON.stringify(task));
+                    index = this.task_list.indexOf(task);
                 }
-            })
+            });
+            return index;
         },
 
         updateIndicies: function () {

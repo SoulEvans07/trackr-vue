@@ -1,17 +1,28 @@
 <template>
     <div class="detail-box">
         <div class="todo-detail-header">
-            <div class="mark-btn">
+            <div class="mark-btn"
+                 @click="markDone"
+                 v-if="!todo.is_done">
                 <svg class="check-icon" focusable="false" viewBox="0 0 32 32">
                     <path d="M10.9,26.2c-0.5,0-1-0.2-1.4-0.6l-6.9-6.9c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0l5.4,5.4L26.8,5.4c0.8-0.8,2-0.8,2.8,0s0.8,2,0,2.8L12.3,25.6C11.9,26,11.4,26.2,10.9,26.2z"></path>
                 </svg>
                 Mark Complete
             </div>
+            <div class="mark-btn completed"
+                 @click="markDone"
+                 v-if="todo.is_done">
+                <svg class="check-icon completed" focusable="false" viewBox="0 0 32 32">
+                    <path d="M10.9,26.2c-0.5,0-1-0.2-1.4-0.6l-6.9-6.9c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0l5.4,5.4L26.8,5.4c0.8-0.8,2-0.8,2.8,0s0.8,2,0,2.8L12.3,25.6C11.9,26,11.4,26.2,10.9,26.2z"></path>
+                </svg>
+                Completed
+            </div>
         </div>
         <div class="todo-detail-content">
             <input type="text" class="todo-detail-title"
                    placeholder="Write a task name"
-                   v-model="todo.name"/>
+                   v-model="todo.name"
+                   v-on:blur="updateTask(todo)"/>
             <div class="assignee-due-date-row">
                 <div class="assignee">
                     <div class="assignee-img"></div>
@@ -31,15 +42,26 @@
                     <path d="M19,26H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h18c0.6,0,1,0.4,1,1S19.6,26,19,26z"></path>
                 </svg>
                 <textarea class="todo-description"
-                          v-model="todo.description"></textarea>
+                          v-model="todo.description"
+                          v-on:blur="updateTask(todo)"></textarea>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import taskListMixin from "../mixins/taskListMixin";
+
     export default {
-        props: ['todo']
+        mixins: [taskListMixin],
+        props: ['todo'],
+        methods: {
+            markDone: async function () {
+                this.todo.is_done = !this.todo.is_done;
+                await this.updateTask(this.todo);
+                // this.setStyle();
+            }
+        }
     }
 </script>
 
@@ -71,7 +93,7 @@
         border-radius: 3px;
         border: solid 1px #646f79;
         padding: 4px;
-        box-shadow: inset 0 1px 5px -1px rgba(0,0,0,0.25)
+        box-shadow: inset 0 1px 5px -1px rgba(0, 0, 0, 0.25)
     }
 
     .descriptionIcon {
@@ -161,6 +183,12 @@
         display: inline-flex;
     }
 
+    .mark-btn.completed {
+        color: white;
+        background: #25e8c8;
+        border-color: #25e8c8;
+    }
+
     .mark-btn > .check-icon {
         width: 16px;
         height: 16px;
@@ -169,11 +197,27 @@
         margin-right: 5px;
     }
 
+    .mark-btn > .check-icon.completed {
+        fill: white;
+    }
+
     .mark-btn:hover {
         background-color: #f6f8f9;
         border: solid 1px #646f79;
         color: #222b37;
         fill: #222b37;
+    }
+
+    .mark-btn.completed:hover {
+        background-color: #00bf9c;
+        border-color: #00bf9c;
+        color: white;
+    }
+
+    .mark-btn.completed:active {
+        background-color: #008c72;
+        border-color: #008c72;
+        color: white;
     }
 
     .mark-btn:active {
