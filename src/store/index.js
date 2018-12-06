@@ -19,9 +19,8 @@ export default new Vuex.Store({
             state.task_list = data;
         },
         setTask(state, {index, data}){
-            console.log(state.task_list[index]);
+            data.index = index;
             state.task_list[index] = data;
-            console.log(state.task_list[index]);
         }
     },
     actions: {
@@ -38,8 +37,8 @@ export default new Vuex.Store({
         setTaskList({ commit }, data){
             commit('setTaskList', data);
         },
-        setTask({commit}, data){
-            commit('setTask', data);
+        setTask({commit}, {index, data}){
+            commit('setTask', {index, data});
         }
     },
     getters: {}

@@ -3,9 +3,7 @@ import apiService from '../services/apiService';
 export default {
     data() {
         // loading: false;
-        return {
-            // task_list: this.$store.state.task_list
-        };
+        return {};
     },
     computed: {
         task_list() {
@@ -30,10 +28,8 @@ export default {
         },
         updateTask: async function (task) {
             let index = this.task_list.indexOf(task);
-            console.log("i: " + index);
             await apiService.post('/tasks/' + task._id + '/update', task).then(res => {
-                console.log(res.data);
-                 this.$store.dispatch('setTask', {index: index, data: res.data});
+                this.$store.dispatch('setTask', { index: index, data: res.data });
             });
         },
         deleteTask: async function (task) {
@@ -45,15 +41,15 @@ export default {
             this.updateIndicies();
         },
 
-        getById: function(id){
+        getById: function (id) {
             this.task_list.forEach(task => {
-                if(task._id === id){
+                if (task._id === id) {
                     return task;
                 }
             })
         },
 
-        updateIndicies: function() {
+        updateIndicies: function () {
             this.task_list.forEach(task => task.index = this.task_list.indexOf(task));
         },
     }
