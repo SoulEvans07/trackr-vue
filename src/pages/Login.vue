@@ -24,7 +24,6 @@
 <script>
     import axios from 'axios';
     import router from '../router'
-    import store from '../store'
 
     export default {
         props: [],
@@ -41,7 +40,7 @@
                     password: this.password
                 }).then((res) => {
                     console.log(res);
-                    store.login({
+                    this.$store.dispatch('login', {
                         user: res.data.user,
                         token: res.data.token
                     });

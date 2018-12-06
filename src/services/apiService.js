@@ -19,6 +19,10 @@ class ApiService {
         }
     }
 
+    logout(){
+        this._axios.defaults.headers.common['Authorization'] = null;
+    }
+
     get(url, data) {
         this.setAuthToken();
         return this._axios({

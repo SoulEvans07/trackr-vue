@@ -38,7 +38,6 @@
 
 <script>
     import router from '../router'
-    import store from '../store'
 
     export default {
         data() {
@@ -47,7 +46,7 @@
         },
         methods: {
             logout: function () {
-                store.logout();
+                this.$store.logout();
                 router.push('/login');
             },
             nav_home: function () {

@@ -58,7 +58,7 @@ const isAuthenticated = () => {
     if (_.isEmpty(user) || !user) {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user)
-            store.login(user);
+            store.dispatch('login', user);
     }
 
     return !_.isEmpty(user) && user;

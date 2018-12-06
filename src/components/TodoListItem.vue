@@ -6,15 +6,17 @@
         <input class="todo-name" type="text" style="margin-bottom: 1px; vertical-align: center"
                v-bind:id="name_id"
                v-model="todo.name"
-               v-on:blur="updateTodo"
+               v-on:blur="update"
                v-on:keydown="eventHandler"/>
     </li>
 </template>
 
 <script>
+    import taskListMixin from '../mixins/taskListMixin';
     import apiService from '../services/apiService';
 
     export default {
+        mixins: [taskListMixin],
         props: ['todo'],
         data() {
             return {
@@ -27,12 +29,12 @@
             this.name_id="title-"+this.todo.index;
         },
         methods: {
-            select: function(){
-                this.$emit('click');
+            update: function(){
+                this.getById(this.todo._id);
+                this.updateTask(this.todo);
             },
-
-            updateTodo: async function () {
-                apiService.post('/tasks/' + this.todo._id + '/update', this.todo);
+            select: function () {
+                this.$emit('click');
             },
             markDone: async function () {
                 this.todo.is_done = !this.todo.is_done;
@@ -45,7 +47,7 @@
                     this.$emit("new");
                 }
                 if (event.key === 'Backspace') {
-                    if(this.todo.name === null || this.todo.name === '')
+                    if (this.todo.name === null || this.todo.name === '')
                         this.$emit("del");
                 }
                 if (event.key === 'Escape') {
@@ -79,10 +81,9 @@
         /*top: 4px;*/
     }
 
-    .todo-name:focus{
+    .todo-name:focus {
         outline: none;
     }
-
 
     .state {
         font-weight: bold;

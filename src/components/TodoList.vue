@@ -40,7 +40,6 @@
 </template>
 
 <script>
-    import store from '../store';
     import apiService from '../services/apiService';
     import taskListMixin from '../mixins/taskListMixin';
     import TodoListItem from './TodoListItem';
@@ -57,7 +56,6 @@
                 title: "Todo List",
                 new_task: undefined,
                 selected_task: undefined,
-                task_list: store.state.tasks,
                 loading: true
             }
         },
