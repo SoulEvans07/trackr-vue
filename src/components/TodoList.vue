@@ -47,7 +47,7 @@
     import TodoDetails from './TodoDetails';
 
     export default {
-        mixins: [ taskListMixin ],
+        mixins: [taskListMixin],
         components: {
             TodoListItem: TodoListItem,
             TodoDetails: TodoDetails
@@ -83,9 +83,13 @@
                 this.onSelect(this.task_list[to]);
             },
             moveTo(index) {
-                index = index < 0 ? 0 : index;
-                index = index >= this.task_list.length ? this.task_list.length - 1 : index;
-                this.onSelect(this.task_list[index]);
+                if (this.task_list.length > 0) {
+                    index = index < 0 ? 0 : index;
+                    index = index >= this.task_list.length ? this.task_list.length - 1 : index;
+                    this.onSelect(this.task_list[index]);
+                } else {
+                    this.clearSelect();
+                }
             },
             onSelect: function (todo) {
                 this.selected_task = todo;
@@ -97,19 +101,10 @@
                 blurTask(this.selected_task.index);
                 this.selected_task = null;
             },
-            deleteTodo: async function (todo) {
-                let index = this.task_list.indexOf(todo);
-
-                this.task_list.splice(index, 1);
-                await apiService.delete("http://127.0.0.1:3000/api/tasks/" + todo._id + "/delete");
-
-                if (this.task_list.length > 0) {
-                    this.moveTo(index - 1);
-                } else {
-                    this.clearSelect();
-                }
-
-                await this.refreshList();
+            deleteTodo: async function (task) {
+                let index = this.task_list.indexOf(task);
+                this.deleteTask(task);
+                this.moveTo(index - 1);
             },
             newTask: async function () {
                 let index = this.task_list.length;
@@ -181,7 +176,7 @@
         border-color: #008ce3;
     }
 
-    .add-task-btn:active{
+    .add-task-btn:active {
         background-color: #006db0;
         border-color: #006db0;
         box-shadow: none;
