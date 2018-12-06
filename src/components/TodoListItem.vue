@@ -1,6 +1,6 @@
 <template>
     <li v-bind:id="todo.index" @click="select">
-        <span style="margin: 0 5px; width: 20px;">{{todo.index}}</span>
+        <!--<span style="margin: 0 5px; width: 20px;">{{todo.index}}</span>-->
         <input class="todo-checkbox" style="margin: 2px 10px" type="checkbox" @click="markDone"
                v-model="todo.is_done">
         <input class="todo-name" type="text" style="margin-bottom: 1px; vertical-align: center"

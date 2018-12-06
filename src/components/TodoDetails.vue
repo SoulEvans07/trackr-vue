@@ -17,6 +17,15 @@
                 </svg>
                 Completed
             </div>
+            <div class="toolbar">
+                <a class="toolbar-btn"
+                    @click="close">
+                    <svg class="svg-icon" focusable="false" viewBox="0 0 32 32">
+                        <path d="M18.1,16l8.9-8.9c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L16,13.9L7.1,4.9c-0.6-0.6-1.5-0.6-2.1,0c-0.6,0.6-0.6,1.5,0,2.1l8.9,8.9l-8.9,8.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l8.9-8.9l8.9,8.9c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L18.1,16z"></path>
+                    </svg>
+                </a>
+            </div>
+
         </div>
         <div class="todo-detail-content">
             <input type="text" class="todo-detail-title"
@@ -60,6 +69,9 @@
                 this.todo.is_done = !this.todo.is_done;
                 await this.updateTask(this.todo);
                 // this.setStyle();
+            },
+            close: function () {
+                this.$emit("deselect");
             }
         }
     }
@@ -166,6 +178,37 @@
         padding: 4px 14px;
     }
 
+    .toolbar {
+        line-height: 30px;
+        font-size: 13px;
+        float: right;
+        padding-right: 5px;
+    }
+
+    .toolbar-btn {
+        cursor: pointer;
+        outline: 0;
+        padding: 7px 0;
+        text-align: center;
+        align-items: center;
+        display: inline-flex;
+    }
+
+    .toolbar-btn > .svg-icon {
+        width: 16px;
+        height: 16px;
+        line-height: 30px;
+        fill: #848f99;
+        margin-right: 5px;
+    }
+
+    .toolbar-btn:hover > .svg-icon {
+        fill: #222b37;
+    }
+    .toolbar-btn:active > .svg-icon {
+        fill: #222b37;
+    }
+
     .mark-btn {
         float: left;
         background: #fff;
@@ -228,7 +271,7 @@
     .todo-detail-header {
         position: relative;
         height: 50px;
-        padding: 10px 5px 10px 30px;
+        padding: 10px 5px 10px 25px;
         border-bottom: solid 1px #dfe5e7;
     }
 

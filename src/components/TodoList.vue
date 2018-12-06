@@ -35,7 +35,8 @@
         <TodoDetails
                 v-if="this.selected_task"
                 v-bind:todo="this.selected_task"
-                v-bind:key="this.selected_task._id"></TodoDetails>
+                v-bind:key="this.selected_task._id"
+                @deselect="clearSelect()"></TodoDetails>
     </div>
 </template>
 
