@@ -5,7 +5,8 @@
                  @click="markDone"
                  v-if="!todo.is_done">
                 <svg class="check-icon" focusable="false" viewBox="0 0 32 32">
-                    <path d="M10.9,26.2c-0.5,0-1-0.2-1.4-0.6l-6.9-6.9c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0l5.4,5.4L26.8,5.4c0.8-0.8,2-0.8,2.8,0s0.8,2,0,2.8L12.3,25.6C11.9,26,11.4,26.2,10.9,26.2z"></path>
+                    <path
+                        d="M10.9,26.2c-0.5,0-1-0.2-1.4-0.6l-6.9-6.9c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0l5.4,5.4L26.8,5.4c0.8-0.8,2-0.8,2.8,0s0.8,2,0,2.8L12.3,25.6C11.9,26,11.4,26.2,10.9,26.2z"></path>
                 </svg>
                 Mark Complete
             </div>
@@ -13,15 +14,17 @@
                  @click="markDone"
                  v-if="todo.is_done">
                 <svg class="check-icon completed" focusable="false" viewBox="0 0 32 32">
-                    <path d="M10.9,26.2c-0.5,0-1-0.2-1.4-0.6l-6.9-6.9c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0l5.4,5.4L26.8,5.4c0.8-0.8,2-0.8,2.8,0s0.8,2,0,2.8L12.3,25.6C11.9,26,11.4,26.2,10.9,26.2z"></path>
+                    <path
+                        d="M10.9,26.2c-0.5,0-1-0.2-1.4-0.6l-6.9-6.9c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0l5.4,5.4L26.8,5.4c0.8-0.8,2-0.8,2.8,0s0.8,2,0,2.8L12.3,25.6C11.9,26,11.4,26.2,10.9,26.2z"></path>
                 </svg>
                 Completed
             </div>
             <div class="toolbar">
                 <a class="toolbar-btn"
-                    @click="close">
+                   @click="close">
                     <svg class="svg-icon" focusable="false" viewBox="0 0 32 32">
-                        <path d="M18.1,16l8.9-8.9c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L16,13.9L7.1,4.9c-0.6-0.6-1.5-0.6-2.1,0c-0.6,0.6-0.6,1.5,0,2.1l8.9,8.9l-8.9,8.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l8.9-8.9l8.9,8.9c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L18.1,16z"></path>
+                        <path
+                            d="M18.1,16l8.9-8.9c0.6-0.6,0.6-1.5,0-2.1c-0.6-0.6-1.5-0.6-2.1,0L16,13.9L7.1,4.9c-0.6-0.6-1.5-0.6-2.1,0c-0.6,0.6-0.6,1.5,0,2.1l8.9,8.9l-8.9,8.9c-0.6,0.6-0.6,1.5,0,2.1c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4l8.9-8.9l8.9,8.9c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L18.1,16z"></path>
                     </svg>
                 </a>
             </div>
@@ -29,6 +32,7 @@
         </div>
         <div class="todo-detail-content">
             <input type="text" class="todo-detail-title"
+                   autocomplete="off"
                    placeholder="Write a task name"
                    v-model="todo.name"
                    v-on:blur="updateTask(todo)"/>
@@ -68,7 +72,6 @@
             markDone: async function () {
                 this.todo.is_done = !this.todo.is_done;
                 await this.updateTask(this.todo);
-                // this.setStyle();
             },
             close: function () {
                 this.$emit("deselect");
@@ -205,6 +208,7 @@
     .toolbar-btn:hover > .svg-icon {
         fill: #222b37;
     }
+
     .toolbar-btn:active > .svg-icon {
         fill: #222b37;
     }

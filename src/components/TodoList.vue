@@ -73,6 +73,9 @@
                 if (this.selected_task && this.selected_task.index === todo.index) {
                     todo_class += " selected";
                 }
+                if(todo.is_done){
+                    todo_class += " done";
+                }
                 return todo_class;
             },
             moveFrom: async function (from, dir) {

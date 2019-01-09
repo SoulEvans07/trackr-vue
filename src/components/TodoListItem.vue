@@ -4,6 +4,7 @@
         <input class="todo-checkbox" style="margin: 2px 10px" type="checkbox" @click="markDone"
                v-model="todo.is_done">
         <input class="todo-name" type="text" style="margin-bottom: 1px; vertical-align: center"
+               autocomplete="off"
                v-bind:id="name_id"
                v-model="todo.name"
                v-on:blur="updateTask(todo)"
@@ -24,8 +25,7 @@
             }
         },
         mounted() {
-            this.setStyle();
-            this.name_id="title-"+this.todo.index;
+            this.name_id = "title-" + this.todo.index;
         },
         methods: {
             select: function () {
@@ -34,7 +34,6 @@
             markDone: async function () {
                 this.todo.is_done = !this.todo.is_done;
                 await this.updateTask(this.todo);
-                this.setStyle();
             },
             eventHandler: async function () {
                 if (event.key === 'Enter') {
@@ -53,9 +52,6 @@
                 if (event.key === 'ArrowUp') {
                     this.$emit("up");
                 }
-            },
-            setStyle: function () {
-                this.class = "state " + (this.todo.is_done ? "done" : "open");
             }
         }
     }
@@ -79,19 +75,7 @@
         outline: none;
     }
 
-    .state {
-        font-weight: bold;
-        color: white;
-        border-radius: 2px;
-        padding: 4px 7px;
-        cursor: pointer;
-    }
-
-    .open {
-        background: red;
-    }
-
     .done {
-        background: #00b600;
+        color: #b7bfc6;
     }
 </style>
