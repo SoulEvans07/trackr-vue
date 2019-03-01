@@ -9,7 +9,7 @@ export default new Vuex.Store({
     state: {
         user: {},
         task_list: [],
-        projects: []
+        project_list: []
     },
     mutations: {
         setUser(state, data) {
@@ -21,6 +21,12 @@ export default new Vuex.Store({
         setTask(state, {index, data}){
             data.index = index;
             state.task_list[index] = data;
+        },
+        setProjectList(state, data){
+            state.project_list = data;
+        },
+        setProject(state, {data}){
+            state.project_list.push(data);
         }
     },
     actions: {
@@ -39,6 +45,9 @@ export default new Vuex.Store({
         },
         setTask({commit}, {index, data}){
             commit('setTask', {index, data});
+        },
+        setProjectList({ commit }, data){
+            commit('setProjectList', data);
         }
     },
     getters: {}

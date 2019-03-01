@@ -9,14 +9,21 @@
                v-model="todo.name"
                v-on:blur="updateTask(todo)"
                v-on:keydown="eventHandler"/>
+        <template v-if="todo.project">
+            <project-label v-bind:project="todo.project"></project-label>
+        </template>
     </li>
 </template>
 
 <script>
     import taskListMixin from '../mixins/taskListMixin';
+    import ProjectLabel from "./ProjectLabel";
 
     export default {
         mixins: [taskListMixin],
+        components: {
+            ProjectLabel: ProjectLabel
+        },
         props: ['todo'],
         data() {
             return {
