@@ -1,5 +1,5 @@
 <template>
-    <li v-bind:id="todo.index" @click="select">
+    <li class="task-item" v-bind:id="todo.index" @click="select">
         <!--<span style="margin: 0 5px; width: 20px;">{{todo.index}}</span>-->
         <input class="todo-checkbox" style="margin: 2px 10px" type="checkbox" @click="markDone"
                v-model="todo.is_done">
@@ -74,12 +74,21 @@
         border: 0;
         font-size: 13px;
         background: transparent;
+        flex-grow: 1;
         /*position: absolute;*/
         /*top: 4px;*/
     }
 
     .todo-name:focus {
         outline: none;
+    }
+
+    .task-item {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
     }
 
     .done {
